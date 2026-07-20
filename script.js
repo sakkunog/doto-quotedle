@@ -39,7 +39,13 @@ async function loadDictionary(word) {
 }
 
 async function generateGame(type) {
-    if (!isGame) return;
+    if (!isGame && type !== 'daily' && type !== 'random') return;
+    isGame = true;
+    currentGuess = 0;
+    guessWord = '';
+    grid = [];
+    board.innerHTML = '';
+    
     try {
         const response = await fetch('quotes.tsv');
         const text = await response.text();
@@ -76,6 +82,7 @@ async function generateGame(type) {
         const finalQuestionText = `${formattedQuote} - ${author}, ${year}`;
 
         document.querySelector('#game-question h1').textContent = finalQuestionText;
+        createBoard(rawWord, totalGuesses);
 
         console.log("Selected Answer:", rawWord);
         console.log("Question Display:", finalQuestionText);
