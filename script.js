@@ -78,14 +78,15 @@ async function generateGame(type) {
         rawWord = answerWord.trim();
         word = rawWord.replace(/\s/g, "").toUpperCase();
 
+        await loadDictionary(word);
+
         const formattedQuote = quote.replace('$$ITEM$$', '_'.repeat(rawWord.length));
         const finalQuestionText = `${formattedQuote} - ${author}, ${year}`;
 
-        document.querySelector('#game-question h1').textContent = finalQuestionText;
-        createBoard(rawWord, totalGuesses);
-
-        console.log("Selected Answer:", rawWord);
-        console.log("Question Display:", finalQuestionText);
+        const questionEl = document.querySelector('#game-question h1');
+        if (questionEl) questionEl.textContent = finalQuestionText;
+        
+        createBoard(word, totalGuesses);
 
     } catch (error) {
         console.error("Error processing TSV:", error);
