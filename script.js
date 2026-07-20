@@ -182,10 +182,8 @@ function btnPress(key) {
     }
 }
 
-createBoard(rawWord, totalGuesses);
 console.log(grid);
 createKeyboard(keyboard);
-loadDictionary(word);
 generateGame('daily');
 
 btnDaily.addEventListener('click', () => {
